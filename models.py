@@ -6,7 +6,7 @@ from .views import app
 db = SQLAlchemy(app)
 
 
-class Request(db.Model):
+class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(200), nullable=False)
     awnser = db.Column(db.Text(1200), nullable=False)
