@@ -15,32 +15,56 @@
 	 <link rel="stylesheet" type="text/css" href="../static/css/main.css">
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
 	 <script src="static/js/script.js"></script>
+
+
+	 <!-- MAPBOX CDN -->	
+	<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+
 </head>
  
 <body>
-    <div class="container">
-    	<div>
-    		<img class='robot_image' src="../static/images/robot.png">
-    	</div>
-    	<div class="m-5">
-	        <form class="form-signin"  role="form">
-	        	<div>
-	        		<h2 class="form-signin-heading">Posez votre question à grandpy bot:</h2>
-	        	</div>
-	        	<div class="mt-2">
-			        <input id="#inputQuestion" name="question" class="form-control" placeholder="Ou se trouve la place Vendome ?" autofocus>         		
-	        	</div>
-	        	<div class="mt-2">
-	       	        <button class="btn btn-lg btn-primary btn-block" type="button">Go!</button>
-				</div>
-			</form>   
-		</div>
-     </div>  
-     <div class="container">
-     	{% if response %}
-     		<p>{{ response }}</p>
-     	{% endif %}
-     </div>
+<div class="container">
+	<div>
+		<img class='robot_image' src="../static/images/robot.png">
+	</div>
+	<div class="m-5">
+        <form class="form-signin"  role="form">
+        	<div>
+        		<h2 class="form-signin-heading">Posez votre question à grandpy bot:</h2>
+        	</div>
+        	<div class="mt-2">
+		        <input id="#inputQuestion" name="question" class="form-control" placeholder="Ou se trouve la place Vendome ?" autofocus>         		
+        	</div>
+        	<div class="mt-2">
+       	        <button class="btn btn-lg btn-primary btn-block" type="button">Go!</button>
+			</div>
+		</form>   
+	</div>
+ </div>
+ {% if response %}
+ <div class="container">
+ 	
+ 		<p>{{ response }}</p>
+ 	
+ </div>
+
+
+<div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtmYzZrbjBqMXoyc2w0d2QyeDM3ancifQ.0Q_3eE9Ea5GPPAUv3QZvmw';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [12.550343, 55.665957],
+zoom: 8
+});
+ 
+var marker = new mapboxgl.Marker()
+.setLngLat([12.550343, 55.665957])
+.addTo(map);
+</script>
+{% endif %}
 </body>
  
 </html>
