@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, json
+from finder import *
 
 app = Flask(__name__)
 
@@ -9,19 +10,11 @@ def home():
 @app.route('/', methods=['POST'])
 def sendRequest():
     awnser = request.form['question'];
-    findPlace(awnser)
+    my_finder = Finder()
+    my_finder.cutter(awnser)
+
+    resultat = my_finder.resultat
     return render_template('index.html', response=resultat)
-
-def findPlace(awnser):
-	print(awnser)
-
-	with open('word.json', "r") as json_file:
-		data = json.load(json_file)
-
-		checker = [word for word in awnser.split() if word.lower() not in data]
-		resultat = ' '.join(checker)
-		print(resultat)
-
 
 if __name__== "__main__":
     app.run(debug=True)
