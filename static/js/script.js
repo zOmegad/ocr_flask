@@ -1,6 +1,6 @@
 $(function(){
 	$('button').click(function(){
-		var user = $('#inputUsername').val();
+		var user = $('#inputQuestion').val();
 		$.ajax({
 			url: '/',
 			data: $('form').serialize(),

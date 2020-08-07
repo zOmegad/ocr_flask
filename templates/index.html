@@ -8,27 +8,37 @@
 	 <meta name="description" content="">
 	 <meta name="author" content="">
 
-	 <title>SignUp Template for Bootstrap </title>
+	 <title>Grandpy Bot </title>
 
-	 <link href="static/css/bootstrap.min.css" rel="stylesheet">
-	 <link href="static/css/signup.css" rel="stylesheet">
+	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+	 <link rel="stylesheet" type="text/css" href="../static/css/main.css">
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
 	 <script src="static/js/script.js"></script>
 </head>
  
 <body>
     <div class="container">
-        <form class="form-signin"  role="form">
-        <h2 class="form-signin-heading">Please Sign Up</h2>
-        <input type="email" id="" name="username" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>       
-        <button class="btn btn-lg btn-primary btn-block" type="button">Register</button>
-		</form>   
+    	<div>
+    		<img class='robot_image' src="../static/images/robot.png">
+    	</div>
+    	<div class="m-5">
+	        <form class="form-signin"  role="form">
+	        	<div>
+	        		<h2 class="form-signin-heading">Posez votre question à grandpy bot:</h2>
+	        	</div>
+	        	<div class="mt-2">
+			        <input id="#inputQuestion" name="question" class="form-control" placeholder="Ou se trouve la place Vendome ?" autofocus>         		
+	        	</div>
+	        	<div class="mt-2">
+	       	        <button class="btn btn-lg btn-primary btn-block" type="button">Go!</button>
+				</div>
+			</form>   
+		</div>
      </div>  
      <div class="container">
-     	{% if awnser %}
-     		<p>{{ awnser }}</p>
+     	{% if response %}
+     		<p>{{ response }}</p>
      	{% endif %}
      </div>
 </body>
