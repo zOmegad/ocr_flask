@@ -14,7 +14,7 @@ def sendRequest():
     my_finder.cutter(awnser)
 
     resultat = my_finder.resultat
-    return render_template('index.html', response=resultat)
+    return render_template('index.html', response=resultat, x_coo=my_finder.coo_x, y_coo=my_finder.coo_y, wiki=my_finder.wiki_result)
 
 if __name__== "__main__":
     app.run(debug=True)

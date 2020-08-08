@@ -25,46 +25,50 @@
  
 <body>
 <div class="container">
-	<div>
-		<img class='robot_image' src="../static/images/robot.png">
-	</div>
 	<div class="m-5">
+    	<div>
+    		<p class="center-align">
+    			<img src="../static/images/robot.png">
+    		</p>
+    		<h2 class="form-signin-heading">Posez votre question à grandpy bot:</h2>
+    	</div>
+
         <form class="form-signin"  role="form">
-        	<div>
-        		<h2 class="form-signin-heading">Posez votre question à grandpy bot:</h2>
-        	</div>
         	<div class="mt-2">
-		        <input id="#inputQuestion" name="question" class="form-control" placeholder="Ou se trouve la place Vendome ?" autofocus>         		
+		        <input id="#inputQuestion" name="question" class="form-control" placeholder="'Ou se trouve la place Vendome ?'" autofocus>         		
         	</div>
         	<div class="mt-2">
        	        <button class="btn btn-lg btn-primary btn-block" type="button">Go!</button>
 			</div>
 		</form>   
 	</div>
- </div>
- {% if response %}
- <div class="container">
+{% if response %}
+
  	
  		<p>{{ response }}</p>
+ 		<p>{{ wiki }}...</p>
  	
- </div>
+
+	{{ x_coo }}
+	{{ y_coo }}
 
 
-<div id='map' style='width: 400px; height: 300px;'></div>
-<script>
-	mapboxgl.accessToken = 'pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtmYzZrbjBqMXoyc2w0d2QyeDM3ancifQ.0Q_3eE9Ea5GPPAUv3QZvmw';
-var map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
-center: [12.550343, 55.665957],
-zoom: 8
-});
- 
-var marker = new mapboxgl.Marker()
-.setLngLat([12.550343, 55.665957])
-.addTo(map);
-</script>
+	<div id='map' style='width: 100%; height: 400px;'></div>
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtlaTlsOTBvN2gydWxoYWQ4OWF4eHEifQ.oKS9ZV_VFYN4aQb294xTZw';
+	var map = new mapboxgl.Map({
+	container: 'map',
+	style: 'mapbox://styles/mapbox/streets-v11',
+	center: [12.550343, 55.665957],
+	zoom: 8
+	});
+	 
+	var marker = new mapboxgl.Marker()
+	.setLngLat([12.550343, 55.665957])
+	.addTo(map);
+	</script>
 {% endif %}
+</div>
 </body>
  
 </html>
