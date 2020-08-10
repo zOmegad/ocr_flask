@@ -13,7 +13,7 @@ class Finder():
 		with open('word.json', "r") as json_file:
 			data = json.load(json_file)
 
-			checker = [word for word in awnser.split() if word.lower() not in data]
+			checker = [word for word in awnser.lower().split() if word.lower() not in data]
 			self.resultat = ' '.join(checker)
 			print(self.resultat)
 			self.mapper()
@@ -27,16 +27,26 @@ class Finder():
 		self.coo_y = map_response["features"][0]["bbox"][1]
 
 	def wiki(self):
-		wiki_link = requests.get("https://fr.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles={}".format(self.resultat))
+		wiki_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch={}&format=json".format(self.resultat))
 		wiki_response = wiki_link.json()
 
-		wiki_pages = wiki_response["query"]["pages"]
-		for key in wiki_pages.keys():
-			wiki_id = key
+		wiki_search = wiki_response["query"]["search"][0]["title"]
+		print("LOL")
+		print(wiki_search)
+		print("LOL")
+
+		wiki_coo_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&prop=coordinates&titles={}&format=json".format(wiki_search))
+		wiki_coo_response = wiki_coo_link.json()
+
+		wiki_coo = wiki_coo_response["query"]["pages"]
+
+		for item in wiki_coo:
+			page_id = item
 			break
 
-		wiki_pages = wiki_pages[wiki_id]["extract"]
-		self.wiki_result = wiki_pages[0:200]
-
+		self.coo_x = wiki_coo[page_id]["coordinates"][0]["lat"]
+		self.coo_y = wiki_coo[page_id]["coordinates"][0]["lon"]
+		print(self.coo_x)
+		print(self.coo_y)
 
 	

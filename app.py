@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, json
 from finder import *
+import string
 
 app = Flask(__name__)
 
@@ -10,6 +11,8 @@ def home():
 @app.route('/', methods=['POST'])
 def sendRequest():
     awnser = request.form['question'];
+    awnser = awnser.translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
+    print(awnser)
     my_finder = Finder()
     my_finder.cutter(awnser)
 
