@@ -43,8 +43,8 @@ class Finder():
 
 		self.coo_x = wiki_coo[page_id]["coordinates"][0]["lat"]
 		self.coo_y = wiki_coo[page_id]["coordinates"][0]["lon"]
-
-		wiki_text_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=800&titles={}&format=json".format(wiki_search))
+		print(wiki_search)
+		wiki_text_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&titles={}&format=json".format(wiki_search))
 		wiki_text_response = wiki_text_link.json()
 
 		self.wiki_result = wiki_text_response["query"]["pages"][page_id]["extract"]
