@@ -16,13 +16,7 @@
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
 	 <script src="static/js/script.js"></script>
 
-
-	 <!-- MAPBOX CDN -->	
-	<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-	<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
-
 </head>
- 
 <body style="background-color: #d4d4d4;">
 <div class="top-bar"></div>
 <div class="container">
@@ -43,31 +37,20 @@
 			</div>
 		</form>   
 	</div>
+	
 {% if response %}
 
  	
  		<p>{{ response }}</p>
- 		<p>{{ wiki }}...</p>
+ 		<p>{{ wiki | safe  }}</p>
  	
 
 	{{ x_coo }}
 	{{ y_coo }}
 
 
-	<div id='map' style='width: 100%; height: 400px;' class="mb-4"></div>
-	<script>
-		mapboxgl.accessToken = 'pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtlaTlsOTBvN2gydWxoYWQ4OWF4eHEifQ.oKS9ZV_VFYN4aQb294xTZw';
-	var map = new mapboxgl.Map({
-	container: 'map',
-	style: 'mapbox://styles/mapbox/streets-v11',
-	center: [12.550343, 55.665957],
-	zoom: 8
-	});
-	 
-	var marker = new mapboxgl.Marker()
-	.setLngLat([12.550343, 55.665957])
-	.addTo(map);
-	</script>
+	
+
 {% else %}
 Je n'ai rien trouvé pour {{ response }}
 {% endif %}

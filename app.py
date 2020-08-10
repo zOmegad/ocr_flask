@@ -12,7 +12,6 @@ def home():
 def sendRequest():
     awnser = request.form['question'];
     awnser = awnser.translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
-    print(awnser)
     my_finder = Finder()
     my_finder.cutter(awnser)
 

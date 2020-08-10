@@ -15,7 +15,6 @@ class Finder():
 
 			checker = [word for word in awnser.lower().split() if word.lower() not in data]
 			self.resultat = ' '.join(checker)
-			print(self.resultat)
 			self.mapper()
 			self.wiki()
 
@@ -31,9 +30,7 @@ class Finder():
 		wiki_response = wiki_link.json()
 
 		wiki_search = wiki_response["query"]["search"][0]["title"]
-		print("LOL")
-		print(wiki_search)
-		print("LOL")
+		self.wiki_result = wiki_response["query"]["search"][0]["snippet"]
 
 		wiki_coo_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&prop=coordinates&titles={}&format=json".format(wiki_search))
 		wiki_coo_response = wiki_coo_link.json()
@@ -46,7 +43,8 @@ class Finder():
 
 		self.coo_x = wiki_coo[page_id]["coordinates"][0]["lat"]
 		self.coo_y = wiki_coo[page_id]["coordinates"][0]["lon"]
-		print(self.coo_x)
-		print(self.coo_y)
 
-	
+		wiki_text_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=800&titles={}&format=json".format(wiki_search))
+		wiki_text_response = wiki_text_link.json()
+
+		self.wiki_result = wiki_text_response["query"]["pages"][page_id]["extract"]
