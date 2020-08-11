@@ -15,15 +15,7 @@ class Finder():
 
 			checker = [word for word in awnser.lower().split() if word.lower() not in data]
 			self.resultat = ' '.join(checker)
-			self.mapper()
 			self.wiki()
-
-	def mapper(self):
-		map_link = requests.get('https://api.mapbox.com/geocoding/v5/mapbox.places/{}.json?access_token=pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtlaTlsOTBvN2gydWxoYWQ4OWF4eHEifQ.oKS9ZV_VFYN4aQb294xTZw'.format(self.resultat))
-		map_response = map_link.json()
-
-		self.coo_x = map_response["features"][0]["bbox"][0]
-		self.coo_y = map_response["features"][0]["bbox"][1]
 
 	def wiki(self):
 		wiki_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch={}&format=json".format(self.resultat))
@@ -41,9 +33,12 @@ class Finder():
 			page_id = item
 			break
 
-		self.coo_x = wiki_coo[page_id]["coordinates"][0]["lat"]
-		self.coo_y = wiki_coo[page_id]["coordinates"][0]["lon"]
-		print(wiki_search)
+		try:
+			self.coo_x = wiki_coo[page_id]["coordinates"][0]["lat"]
+			self.coo_y = wiki_coo[page_id]["coordinates"][0]["lon"]
+		except:
+			pass
+
 		wiki_text_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&titles={}&format=json".format(wiki_search))
 		wiki_text_response = wiki_text_link.json()
 
