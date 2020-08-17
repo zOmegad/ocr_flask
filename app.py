@@ -17,6 +17,7 @@ def sendRequest():
     awnser = awnser.translate(str.maketrans(string.punctuation, ' '*len(string.punctuation)))
     my_finder = Finder()
     my_finder.cutter(awnser)
+    my_finder.wiki()
 
     coordonnes = [my_finder.coo_y, my_finder.coo_x]
     map_api = os.getenv("MAP_API")

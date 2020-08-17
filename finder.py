@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, json
-import requests
+import requests, string
 
 class Finder():
 
@@ -14,8 +14,9 @@ class Finder():
 			data = json.load(json_file)
 
 			checker = [word for word in awnser.lower().split() if word.lower() not in data]
-			self.resultat = ' '.join(checker)
-			self.wiki()
+			resultat = ' '.join(checker)
+			# remove punctuation
+			self.resultat = resultat.translate(str.maketrans('', '', string.punctuation))
 
 	def wiki(self):
 		wiki_link = requests.get("https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch={}&format=json".format(self.resultat))
