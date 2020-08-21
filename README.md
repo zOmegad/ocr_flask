@@ -14,7 +14,7 @@ $ pip install -r requirements.txt
 ```
 To run server with debug mode :
 ```bash
-$ FLASK_APP=app.py FLASK_ENV=devepment flask 
+$ FLASK_APP=app.py FLASK_ENV=development flask run
 ```
 
 ## Run tests
