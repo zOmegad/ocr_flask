@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, json
-from finder import *
+from scripts.finder import *
 import os
 from dotenv import load_dotenv
 import string
