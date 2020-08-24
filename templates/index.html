@@ -63,14 +63,13 @@
 	    <span class="fa fa-github"></span> Repo
 	 </a>
 	</div>
-
 <script>
 	mapboxgl.accessToken = '{{map_key}}';
 var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/omegad/ckdoxd2pr03zl1inw8auw5s6r',
 center: {{coordinate}},
-zoom: 10,
+zoom: 10
 });
  
 var marker = new mapboxgl.Marker()

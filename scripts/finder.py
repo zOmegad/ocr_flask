@@ -13,7 +13,7 @@ class Finder():
         self.wiki_search = None
 
     def cutter(self, awnser):
-        with open('static/word.json', "r") as json_file:
+        with open('word.json', "r") as json_file:
             data = json.load(json_file)
 
             checker = [word for word in awnser.lower().split()
@@ -37,16 +37,11 @@ class Finder():
                                       "{}&format=json".format(self.wiki_search))
         wiki_text_response = wiki_text_link.json()
 
-        wiki_page_id = wiki_text_response["query"]["pages"]
-        for item in wiki_page_id:
-            page_id = item
-            break
-
         self.wiki_result = wiki_text_response["query"]["pages"][page_id]["extract"]
 
     def map_api(self):
         map_link = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/{}.json?access_token=pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtlaTlsOTBvN2gydWxoYWQ4OWF4eHEifQ.oKS9ZV_VFYN4aQb294xTZw".format(self.wiki_search)) 
         map_response = map_link.json()
         coordinates = map_response["features"][0]["geometry"]["coordinates"]
-        self.coo_y = coordinates[0]
-        self.coo_x = coordinates[1]
+        print(coordinates[0])
+        print(coordinates[1])

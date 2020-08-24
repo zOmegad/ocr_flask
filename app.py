@@ -21,6 +21,7 @@ def sendRequest():
     my_finder = Finder()
     my_finder.cutter(awnser)
     my_finder.wiki()
+    my_finder.map_api()
 
     coordonnes = [my_finder.coo_y, my_finder.coo_x]
     map_api = os.getenv("MAP_API")
