@@ -20,7 +20,8 @@ def sendRequest():
         string.punctuation, ' '*len(string.punctuation)))
     my_finder = Finder()
     my_finder.cutter(awnser)
-    my_finder.wiki()
+    my_finder.wiki_title()
+    my_finder.wiki_text()
     my_finder.map_api()
 
     coordonnes = [my_finder.coo_y, my_finder.coo_x]

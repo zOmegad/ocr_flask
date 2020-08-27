@@ -1,21 +1,129 @@
-import finder as script
+from scripts.finder import Finder
 import pytest
+import json
+import requests
 
-# test that wiki api returns objects
-def test_wiki_result():
-	finder = script.Finder()
-	finder.resultat = "Paris"
-	finder.wiki()
 
-	assert isinstance(finder.wiki_result, str)
-	assert isinstance(finder.coo_x, float)
-	assert isinstance(finder.coo_y, float)
+def test_wiki_returns_good_fields(monkeypatch):
+	wiki_response = {
+	   "batchcomplete":"",
+	   "query":{
+	      "searchinfo":{
+	         "totalhits":112293
+	      },
+	      "search":[
+	         {
+	            "ns":0,
+	            "title":"Londres",
+	            "pageid":4924,
+	            "size":167237,
+	            "wordcount":16887,
+	            "snippet":"Pour les articles homonymes, voir <span class=\"searchmatch\">Londres</span> (homonymie). <span class=\"searchmatch\">Londres</span> [lɔ̃dʁ] Écouter (en anglais : London [ˈlʌndən] Écouter) est la capitale et la plus grande",
+	            "timestamp":"2020-08-22T15:44:54Z"
+	         }
+	      ]
+	   }
+	}
+	finder = Finder()
+	finder.resultat = "Londres"
 
-# test cutter functiun
-def test_cutter_return():
-	awnser = "Ou se trouve le zoo de Paris ?"
-	result = "zoo paris "
+	class MockReturn:
 
-	finder = script.Finder()
-	finder.cutter(awnser)
-	assert result == finder.resultat
+			def json():
+				results_string = json.dumps(wiki_response)
+				results_bytes = results_string.encode()
+				result_json = json.loads(results_bytes)
+				return result_json
+
+	def mock_get_response(*args, **kwargs):
+		return MockReturn
+
+
+	monkeypatch.setattr('requests.get', mock_get_response)
+	finder.wiki_title()
+	assert finder.wiki_search == "Londres"
+
+def test_wiki_text_returns_good_fields(monkeypatch):
+
+	wiki_text_response = {
+	  "batchcomplete": "",
+	  "query": {
+	    "pages": {
+	      "4924": {
+	        "pageid": 4924,
+	        "ns": 0,
+	        "title": "Londres",
+	        "extract": "Article text"
+	      }
+	    }
+	  }
+	}
+	finder = Finder()
+	finder.wiki_search = "Londres"
+
+	class MockReturn:
+
+			def json():
+				results_string = json.dumps(wiki_text_response)
+				results_bytes = results_string.encode()
+				result_json = json.loads(results_bytes)
+				return result_json
+
+	def mock_get_response(*args, **kwargs):
+		return MockReturn
+
+
+	monkeypatch.setattr('requests.get', mock_get_response)
+	finder.wiki_text()
+	assert finder.wiki_result == "Article text"
+
+def test_map_api_returns_coordinates(monkeypatch):
+	map_response = {
+   "type":"FeatureCollection",
+   "query":[
+      "londres"
+   ],
+   "features":[
+      {
+         "id":"poi.420906857582",
+         "type":"Feature",
+         "place_type":[
+            "poi"
+         ],
+         "relevance":1,
+         "properties":{
+            "foursquare":"4d1bcf18763fb1f7a5978566",
+            "wikidata":"Q4043155",
+            "address":"Londres 38",
+            "category":"historic site, historic"
+         },
+         "geometry":{
+            "coordinates":[
+               -70.64812649999999,
+               -33.444244499999996
+            ],
+            "type":"Point"
+         }
+      }
+   ]
+}
+
+	finder = Finder()
+	finder.wiki_map_api = "Londres"
+
+	class MockReturn:
+
+			def json():
+				results_string = json.dumps(map_response)
+				results_bytes = results_string.encode()
+				result_json = json.loads(results_bytes)
+				return result_json
+
+	def mock_get_response(*args, **kwargs):
+		return MockReturn
+
+
+	monkeypatch.setattr('requests.get', mock_get_response)
+	finder.map_api()
+	assert finder.coo_y == -70.64812649999999
+	assert finder.coo_x == -33.444244499999996
