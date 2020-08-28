@@ -127,3 +127,10 @@ def test_map_api_returns_coordinates(monkeypatch):
 	finder.map_api()
 	assert finder.coo_y == -70.64812649999999
 	assert finder.coo_x == -33.444244499999996
+
+def test_cutter_returns_word():
+	finder = Finder()
+	awnser = "Ou est Londres ?"
+	finder.cutter(awnser)
+
+	assert finder.resultat == "londres "
