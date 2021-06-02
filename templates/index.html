@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
 	 <meta charset="utf-8">
 	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,19 +10,19 @@
 
 	 <title>Grandpy Bot </title>
 
-	 <link rel="icon" href="../static/images/robot.png" type="image/gif" sizes="16x16"> 
+	 <link rel="icon" href="../static/images/robot.png" type="image/gif" sizes="16x16">
 
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 	 <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	 <script src="static/js/script.js"></script>
 
 
-	<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-	<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+     <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+     <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
 
 </head>
 <body style="background-color: #d4d4d4;">
@@ -39,10 +39,10 @@
 
         <form class="form-signin" role="form">
         	<div class="form-group mt-2">
-		        <input id="#inputQuestion" name="question" class="form-control" placeholder="'Ou se trouve la place Vendome ?'" autofocus>         		
+		        <input id="#inputQuestion" name="question" class="form-control" placeholder="'Ou se trouve la place Vendome ?'" autofocus>
         	</div>
        	      <button id="#button" class="btn btn-lg btn-dark btn-block" type="button">Go!</button>
-		</form>   
+		</form>
 	</div>
 
 {% if response %}
@@ -50,7 +50,7 @@
 	<div class="item2">
 		<img src="../static/images/robot.png">
 	</div>
-	<div class="item4 bubble me mt-2 mb-4">	
+	<div class="item4 bubble me mt-2 mb-4">
 	 	<p>{{ wiki | safe  }}...</p>
 	</div>
 </div>
@@ -65,7 +65,7 @@ style: 'mapbox://styles/omegad/ckdoxd2pr03zl1inw8auw5s6r',
 center: {{coordinate}},
 zoom: 10
 });
- 
+
 var marker = new mapboxgl.Marker()
 .setLngLat({{coordinate}})
 .addTo(map);

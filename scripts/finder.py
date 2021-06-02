@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, json
 import requests
 import string
+import os
+from dotenv import load_dotenv
 
 
 class Finder():
@@ -46,7 +48,7 @@ class Finder():
         self.wiki_result = wiki_text_response["query"]["pages"][page_id]["extract"]
 
     def map_api(self):
-        map_link = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/{}.json?access_token=pk.eyJ1Ijoib21lZ2FkIiwiYSI6ImNrZGtlaTlsOTBvN2gydWxoYWQ4OWF4eHEifQ.oKS9ZV_VFYN4aQb294xTZw".format(self.wiki_search))
+        map_link = requests.get("https://api.mapbox.com/geocoding/v5/mapbox.places/{}.json?access_token={}".format(self.wiki_search, os.getenv("MAP_API")))
         map_response = map_link.json()
         coordinates = map_response["features"][0]["geometry"]["coordinates"]
         self.coo_y = coordinates[0]
