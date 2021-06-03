@@ -41,11 +41,29 @@
         	<div class="form-group mt-2">
 		        <input id="#inputQuestion" name="question" class="form-control" placeholder="'Ou se trouve la place Vendome ?'" autofocus>
         	</div>
-       	      <button id="#button" class="btn btn-lg btn-dark btn-block" type="button">Go!</button>
+       	      <button id="#button" class="search-button btn btn-lg btn-dark btn-block" type="button">Go!</button>
 		</form>
 	</div>
 
 {% if response %}
+
+
+<form class="form" action="/" role="form" method="post">
+  <div class="form-group mx-sm-3 mb-2">
+    <label class="sr-only">Password</label>
+    <input type="text" name="inputRepost" class="form-control" placeholder="Repost" name="inputRepost">
+  </div>
+  <div class="form-group mx-sm-3 mb-2">
+	  <input type="textarea" name="inputRepostText" value="">
+	  {{ data_wiki }}
+  </div>
+  <input type="hidden" name="inputData" value="{{ data_wiki }}">
+  <input type="hidden" name="inputCoordinates" value="{{coordinate}}">
+  <button type="submit" value="repost" class="btn btn-primary mb-2">Repost</button>
+</form>
+
+
+
 <div class="grid-container">
 	<div class="item2">
 		<img src="../static/images/robot.png">

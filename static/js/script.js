@@ -1,5 +1,5 @@
 $(function(){
-	$('button').click(function(){
+	$(".search-button").on('click', function(){
 		var user = $('#inputQuestion').val();
 		$.ajax({
 			url: '/',
