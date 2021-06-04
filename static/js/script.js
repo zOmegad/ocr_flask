@@ -3,7 +3,7 @@ $(function(){
 		var user = $('#inputQuestion').val();
 		$.ajax({
 			url: '/',
-			data: $('form').serialize(),
+			data: $('.form-search').serialize(),
 			type: 'POST',
 			beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
                 $('#loader').addClass('imageLoader')

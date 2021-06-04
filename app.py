@@ -3,6 +3,7 @@ from scripts.finder import *
 from models.models import *
 import os
 import ast
+import pymongo
 from mongoengine import connect
 from datetime import datetime
 from dotenv import load_dotenv
@@ -14,13 +15,17 @@ load_dotenv()
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client["grandpy_bot"]
+    col = db["repost"]
+    data = col.find({})
+    map_api = os.getenv("MAP_API")
+    return render_template('index.html', repost = data, map_key = map_api )
 
 
 @app.route('/', methods=['POST'])
 def sendRequest():
     if "question" in request.form:
-        print("ceci est une recherche")
         awnser = request.form['question']
         awnser = awnser.translate(str.maketrans(
             string.punctuation, ' '*len(string.punctuation)))
@@ -36,13 +41,23 @@ def sendRequest():
         return render_template('index.html', response=resultat, coordinate=coordonnes, wiki=my_finder.wiki_result[0:2000], map_key=map_api, data_wiki = wiki_search)
 
     if "inputRepost" in request.form:
-
-        username = request.form["inputRepost"]
-        message = request.form["inputRepostText"]
-        data = request.form["inputData"]
-        date_now = datetime.now()
-        coordinates = ast.literal_eval(request.form["inputCoordinates"])
-        print(date_now.strftime("%d/%m/%Y %H:%M:%S"))
+        my_db = connect(db="grandpy_bot", host="localhost", port=27017)
+        username_i = request.form["inputRepost"]
+        message_i = request.form["inputRepostText"]
+        city_i = request.form["inputData"]
+        coordinates_i = ast.literal_eval(request.form["inputCoordinates"])
+        try:
+            new_repost = Repost(
+                username = username_i,
+                comment = message_i,
+                coordinate = coordinates_i,
+                city = city_i,
+                posted_at = datetime.now()
+            )
+            new_repost.save()
+        except Exception as e:
+            print(e)
+        my_db.close()
         return redirect('/')
 
 if __name__ == "__main__":
