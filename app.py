@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, json, redirect
 from scripts.finder import *
 from models.models import *
 import os
+import json
 import ast
 import pymongo
 from mongoengine import connect
@@ -45,6 +46,10 @@ def sendRequest():
         username_i = request.form["inputRepost"]
         message_i = request.form["inputRepostText"]
         city_i = request.form["inputData"]
+        if not request.form["inputAvatar"]:
+            avatar_i = "https://ai-or-human.github.io/assets/emoji-ai.png"
+        else:
+            avatar_i = request.form["inputAvatar"]
         coordinates_i = ast.literal_eval(request.form["inputCoordinates"])
         try:
             new_repost = Repost(
@@ -52,6 +57,7 @@ def sendRequest():
                 comment = message_i,
                 coordinate = coordinates_i,
                 city = city_i,
+                avatar = avatar_i,
                 posted_at = datetime.now()
             )
             new_repost.save()
@@ -59,6 +65,47 @@ def sendRequest():
             print(e)
         my_db.close()
         return redirect('/')
+
+    if "alphabetic" in request.form:
+        print('--------------ALPHABETIC-----------')
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["grandpy_bot"]
+        col = db["repost"]
+        data_find = col.find({})
+        data = data_find.sort('city', pymongo.ASCENDING)
+        map_api = os.getenv("MAP_API")
+        return render_template('index.html', repost = data, map_key = map_api )
+
+    if "recent" in request.form:
+        print('--------------RECENT-----------')
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["grandpy_bot"]
+        col = db["repost"]
+        data_find = col.find({})
+        data = data_find.sort('posted_at', pymongo.DESCENDING)
+        map_api = os.getenv("MAP_API")
+        return render_template('index.html', repost = data, map_key = map_api )
+
+    if "oldest" in request.form:
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["grandpy_bot"]
+        col = db["repost"]
+        data_find = col.find({})
+        data = data_find.sort('posted_at', pymongo.ASCENDING)
+        map_api = os.getenv("MAP_API")
+        return render_template('index.html', repost = data, map_key = map_api )
+
+    if "popular" in request.form:
+        print('--------------POPULAR-----------')
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["grandpy_bot"]
+        col = db["repost"]
+        data = col.aggregate([{ "$group" : { "_id" : "$city", "comment": { "$push": "$comment" } } }, { "$sort": { "_id": 1 } }])
+        map_api = os.getenv("MAP_API")
+        return render_template('index.html', repost = data, map_key = map_api )
+
+    print('------FUCKED-------')
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)

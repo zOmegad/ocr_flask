@@ -5,4 +5,5 @@ class Repost(Document):
     comment = StringField(required=True)
     coordinate = ListField(required=True)
     city = StringField(required=True, max_length=70)
+    avatar = URLField(required=True)
     posted_at = DateTimeField(required=True)
