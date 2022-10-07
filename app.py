@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, json, redirect
 from scripts.finder import *
 from models.models import *
 import os
-import json
 import ast
 import pymongo
 from mongoengine import connect
@@ -66,11 +65,12 @@ def sendRequest():
         my_db.close()
         return redirect('/')
 
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client["grandpy_bot"]
+    col = db["repost"]
+
     if "alphabetic" in request.form:
         print('--------------ALPHABETIC-----------')
-        client = pymongo.MongoClient("mongodb://localhost:27017/")
-        db = client["grandpy_bot"]
-        col = db["repost"]
         data_find = col.find({})
         data = data_find.sort('city', pymongo.ASCENDING)
         map_api = os.getenv("MAP_API")
@@ -78,18 +78,12 @@ def sendRequest():
 
     if "recent" in request.form:
         print('--------------RECENT-----------')
-        client = pymongo.MongoClient("mongodb://localhost:27017/")
-        db = client["grandpy_bot"]
-        col = db["repost"]
         data_find = col.find({})
         data = data_find.sort('posted_at', pymongo.DESCENDING)
         map_api = os.getenv("MAP_API")
         return render_template('index.html', repost = data, map_key = map_api )
 
     if "oldest" in request.form:
-        client = pymongo.MongoClient("mongodb://localhost:27017/")
-        db = client["grandpy_bot"]
-        col = db["repost"]
         data_find = col.find({})
         data = data_find.sort('posted_at', pymongo.ASCENDING)
         map_api = os.getenv("MAP_API")
@@ -97,10 +91,9 @@ def sendRequest():
 
     if "popular" in request.form:
         print('--------------POPULAR-----------')
-        client = pymongo.MongoClient("mongodb://localhost:27017/")
-        db = client["grandpy_bot"]
-        col = db["repost"]
-        data = col.aggregate([{ "$group" : { "_id" : "$city", "comment": { "$push": "$comment" } } }, { "$sort": { "_id": 1 } }])
+        data = col.aggregate([{ "$sort": { "city": -1 } }, { "$group": { "_id": "$city", "max": { "$max": "$city" }, "items": { "$push": "$$ROOT" } } },{ "$sort": { "max": -1 } }, { "$unwind": "$items" }, { "$replaceRoot": {"newRoot": "$items" }}])
+        for item in data:
+            print(item["city"])
         map_api = os.getenv("MAP_API")
         return render_template('index.html', repost = data, map_key = map_api )
 

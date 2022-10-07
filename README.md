@@ -1,13 +1,18 @@
+
 # GrandpyBOT - OCR 🤖
 
-Python3 flask app that find places and history about it, simply with Wikimedia and Mapbox API. 
+Python3 flask app that find places and history about it, simply with Wikimedia and Mapbox API.
 
+## Patch note
++mongodb database connection
++comment section with username, avatar
++sort system for reposted comments
 
 ## Requirement
 
 python3 & pip
 
-## Installation 
+## Installation
 
 ```bash
 $ pip install -r requirements.txt
