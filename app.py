@@ -57,7 +57,9 @@ def sendRequest():
                 coordinate = coordinates_i,
                 city = city_i,
                 avatar = avatar_i,
-                posted_at = datetime.now()
+                posted_at = datetime.now(),
+                upvote = 0,
+                downvote = 0
             )
             new_repost.save()
         except Exception as e:
@@ -91,13 +93,11 @@ def sendRequest():
 
     if "popular" in request.form:
         print('--------------POPULAR-----------')
-        data = col.aggregate([{ "$sort": { "city": -1 } }, { "$group": { "_id": "$city", "max": { "$max": "$city" }, "items": { "$push": "$$ROOT" } } },{ "$sort": { "max": -1 } }, { "$unwind": "$items" }, { "$replaceRoot": {"newRoot": "$items" }}])
-        for item in data:
-            print(item["city"])
+        data_find = col.find({})
+        data = data_find.sort('upvote', pymongo.DESCENDING)
         map_api = os.getenv("MAP_API")
         return render_template('index.html', repost = data, map_key = map_api )
 
-    print('------FUCKED-------')
     return redirect('/')
 
 if __name__ == "__main__":
