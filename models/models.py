@@ -8,4 +8,3 @@ class Repost(Document):
     avatar = URLField(required=True)
     posted_at = DateTimeField(required=True)
     upvote = IntField()
-    downvote = IntField()

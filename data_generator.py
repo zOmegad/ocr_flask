@@ -30,4 +30,3 @@ for i in range(25):
     new_repost.save()
 
 my_db.close()
-# for i in range(10)

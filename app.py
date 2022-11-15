@@ -4,6 +4,7 @@ from models.models import *
 import os
 import ast
 import pymongo
+from bson.json_util import ObjectId
 from mongoengine import connect
 from datetime import datetime
 from dotenv import load_dotenv
@@ -97,6 +98,15 @@ def sendRequest():
         data = data_find.sort('upvote', pymongo.DESCENDING)
         map_api = os.getenv("MAP_API")
         return render_template('index.html', repost = data, map_key = map_api )
+    
+    if "upvote" in request.form:
+        # mongoengine
+        my_db = connect(db="grandpy_bot", host="localhost", port=27017)
+        post_id = request.form["upvote"]
+        data = Repost.objects.get(id=post_id)
+        current_upvote = data.upvote + 1
+        data.update(upvote=current_upvote)
+        my_db.close()
 
     return redirect('/')
 

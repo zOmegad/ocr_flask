@@ -119,29 +119,27 @@ var marker = new mapboxgl.Marker()
 	</div>
 </div>
 
-<div class="card-deck">
-	<div class="row">
 {% for post in repost %}
-{% print post %}
-
-  <div class="col-sm-6 mb-2">
-    <div class="card">
-		<img class="card-img-top" src="https://source.unsplash.com/800x600/?{{post.city}}" alt="">
-      <div class="card-body">
-				<h3 class="card-title"><strong>{{post.city}}</strong></h3>
-				<div class="">
-					<img src="{{post.avatar}}" alt="" class="float-left" style="width:25px; height:25px;">
-					<h5 class="card-title">  {{post.username}} :</h5>
-				</div>
-        <p class="card-text">{{post.comment}}</p>
-		<form class="form{{post._id}}" method="POST">
-			<input type="hidden" id="#inputQuestion{{post._id}}" name="question" class="form-control" value="{{post.city}}">
-			<button id="#button" class="search-button{{post._id}} btn btn-lg btn-dark btn-block" type="button">Go!</button>
+{{ post }}
+<div class="card mt-2">
+	<div class="card-header">
+		{{post.city}}
+		<form method="POST" role="form">
+       	      <button type="submit" name="upvote" value="{{post._id}}">Go!</button>
 		</form>
-		<p class="card-text"><small class="text-muted">{{post.posted_at}}</small></p>
-      </div>
-    </div>
+	</div>
+	<div class="card-body">
+	  <h5 class="card-title">{{post.upvote}}</h5>
+	  <img class="card-img-top" src="https://source.unsplash.com/800x600/?{{post.city}}" style="height: 100px; width: 150px;" alt="">
+	  <p class="card-text">{{post.username}} : {{post.comment}}</p>
+	  <a href="#" class="btn btn-primary">Go somewhere</a>
+	</div>
+	<div class="card-footer text-muted">
+		{{post.posted_at}}
+	</div>
   </div>
+
+
 
  <script type="text/javascript">
  $(function(){
@@ -169,8 +167,6 @@ var marker = new mapboxgl.Marker()
 
  </script>
 {% endfor %}
-	</div>
-</div>
 {% endif %}
 
 	<div class="my_footer mb-2">
