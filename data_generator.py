@@ -24,7 +24,6 @@ for i in range(25):
         avatar = "https://ai-or-human.github.io/assets/emoji-ai.png",
         posted_at = datetime.now(),
         upvote = random.randint(0,100),
-        downvote = 0
     )
     print(i)
     new_repost.save()

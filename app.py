@@ -58,9 +58,7 @@ def sendRequest():
                 coordinate = coordinates_i,
                 city = city_i,
                 avatar = avatar_i,
-                posted_at = datetime.now(),
-                upvote = 0,
-                downvote = 0
+                posted_at = datetime.now(),  
             )
             new_repost.save()
         except Exception as e:

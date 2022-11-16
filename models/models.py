@@ -7,4 +7,4 @@ class Repost(Document):
     city = StringField(required=True, max_length=70)
     avatar = URLField(required=True)
     posted_at = DateTimeField(required=True)
-    upvote = IntField()
+    upvote = IntField(default=0)
