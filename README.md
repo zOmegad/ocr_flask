@@ -26,3 +26,8 @@ $ FLASK_APP=app.py FLASK_ENV=development flask run
 ```bash
 $ pytest
 ```
+
+Coverage :
+```bash
+$ pytest --cov .
+```
