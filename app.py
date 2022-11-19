@@ -41,7 +41,7 @@ def sendRequest():
         return render_template('index.html', response=resultat, coordinate=coordonnes, wiki=my_finder.wiki_result[0:2000], map_key=map_api, data_wiki = wiki_search)
 
     if "inputRepost" in request.form:
-        print(request.form)
+        print(type(request.form))
         if 'db_test' in request.form:
             my_db = connect(db="grandpy_bot_test", host="localhost", port=27017)
         else:
@@ -67,7 +67,6 @@ def sendRequest():
         except Exception as e:
             print(e)
         my_db.close()
-        return redirect('/')
     
     if "upvote" in request.form:
         # mongoengine
@@ -78,7 +77,7 @@ def sendRequest():
         data.update(upvote=current_upvote)
         my_db.close()
 
-    return redirect('/')
+    return redirect('/') # returns 302 code
 
 @app.route('/alphabetic', methods=['GET'])
 def alphabetic_sort():
