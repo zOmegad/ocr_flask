@@ -10,9 +10,9 @@ from datetime import datetime
 from dotenv import load_dotenv
 import string
 
+
 app = Flask(__name__)
 load_dotenv()
-
 
 @app.route('/')
 def home():
@@ -42,7 +42,11 @@ def sendRequest():
         return render_template('index.html', response=resultat, coordinate=coordonnes, wiki=my_finder.wiki_result[0:2000], map_key=map_api, data_wiki = wiki_search)
 
     if "inputRepost" in request.form:
-        my_db = connect(db="grandpy_bot", host="localhost", port=27017)
+        print(request.form)
+        if 'db_test' in request.form:
+            my_db = connect(db="grandpy_bot_test", host="localhost", port=27017)
+        else:
+            my_db = connect(db="grandpy_bot", host="localhost", port=27017)
         username_i = request.form["inputRepost"]
         message_i = request.form["inputRepostText"]
         city_i = request.form["inputData"]
@@ -71,14 +75,12 @@ def sendRequest():
     col = db["repost"]
 
     if "alphabetic" in request.form:
-        print('--------------ALPHABETIC-----------')
         data_find = col.find({})
         data = data_find.sort('city', pymongo.ASCENDING)
         map_api = os.getenv("MAP_API")
         return render_template('index.html', repost = data, map_key = map_api )
 
     if "recent" in request.form:
-        print('--------------RECENT-----------')
         data_find = col.find({})
         data = data_find.sort('posted_at', pymongo.DESCENDING)
         map_api = os.getenv("MAP_API")
@@ -91,7 +93,6 @@ def sendRequest():
         return render_template('index.html', repost = data, map_key = map_api )
 
     if "popular" in request.form:
-        print('--------------POPULAR-----------')
         data_find = col.find({})
         data = data_find.sort('upvote', pymongo.DESCENDING)
         map_api = os.getenv("MAP_API")

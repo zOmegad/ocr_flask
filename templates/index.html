@@ -43,7 +43,7 @@
         	</div>
        	      <button id="#button" class="search-button btn btn-lg btn-dark btn-block" type="button">Go!</button>
 		</form>
-	</div>
+	</div>	
 
 {% if response %}
 <div class="grid-container">
@@ -123,6 +123,7 @@ var marker = new mapboxgl.Marker()
 </div>
 <div class="row">
 {% for post in repost %}
+<!-- {{ post }} -->
 	<div class="col-sm-6">
 		<div class="card border-secondary mt-2">
 			<div class="card-header">
@@ -139,7 +140,7 @@ var marker = new mapboxgl.Marker()
 				</div>
 			</div>
 			<div class="card-body">
-				<img class="card-img-top" src="https://source.unsplash.com/800x600/?{{post.city}}" alt="{{post.city}}">
+				<img class="card-img-top" src="/static/images/city.jpg" alt="{{post.city}}">
 				<blockquote class="blockquote text-center">
 				<p class="mb-0 mt-2">{{post.comment}}</p>
 				<footer class="blockquote-footer"><cite title="Source Title">{{post.username}}</cite></footer>
