@@ -13,16 +13,15 @@ import string
 
 app = Flask(__name__)
 load_dotenv()
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["grandpy_bot"]
+col = db["repost"]
 
 @app.route('/')
 def home():
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    db = client["grandpy_bot"]
-    col = db["repost"]
     data = col.find({})
     map_api = os.getenv("MAP_API")
     return render_template('index.html', repost = data, map_key = map_api )
-
 
 @app.route('/', methods=['POST'])
 def sendRequest():
@@ -69,34 +68,6 @@ def sendRequest():
             print(e)
         my_db.close()
         return redirect('/')
-
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    db = client["grandpy_bot"]
-    col = db["repost"]
-
-    if "alphabetic" in request.form:
-        data_find = col.find({})
-        data = data_find.sort('city', pymongo.ASCENDING)
-        map_api = os.getenv("MAP_API")
-        return render_template('index.html', repost = data, map_key = map_api )
-
-    if "recent" in request.form:
-        data_find = col.find({})
-        data = data_find.sort('posted_at', pymongo.DESCENDING)
-        map_api = os.getenv("MAP_API")
-        return render_template('index.html', repost = data, map_key = map_api )
-
-    if "oldest" in request.form:
-        data_find = col.find({})
-        data = data_find.sort('posted_at', pymongo.ASCENDING)
-        map_api = os.getenv("MAP_API")
-        return render_template('index.html', repost = data, map_key = map_api )
-
-    if "popular" in request.form:
-        data_find = col.find({})
-        data = data_find.sort('upvote', pymongo.DESCENDING)
-        map_api = os.getenv("MAP_API")
-        return render_template('index.html', repost = data, map_key = map_api )
     
     if "upvote" in request.form:
         # mongoengine
@@ -108,6 +79,30 @@ def sendRequest():
         my_db.close()
 
     return redirect('/')
+
+@app.route('/alphabetic', methods=['GET'])
+def alphabetic_sort():
+    data_find = col.find({})
+    data = data_find.sort('city', pymongo.ASCENDING)
+    return render_template('index.html', repost = data)
+
+@app.route('/recent', methods=['GET'])
+def recent_sort():
+    data_find = col.find({})
+    data = data_find.sort('posted_at', pymongo.DESCENDING)
+    return render_template('index.html', repost = data)
+
+@app.route('/oldest', methods=['GET'])
+def oldest_sort():
+    data_find = col.find({})
+    data = data_find.sort('posted_at', pymongo.ASCENDING)
+    return render_template('index.html', repost = data)
+
+@app.route('/popular', methods=['GET'])
+def popular_sort():
+    data_find = col.find({})
+    data = data_find.sort('upvote', pymongo.DESCENDING)
+    return render_template('index.html', repost = data)
 
 if __name__ == "__main__":
     app.run(debug=True)

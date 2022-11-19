@@ -101,24 +101,16 @@ var marker = new mapboxgl.Marker()
 </div>
 <div class="row justify-content-center mb-4">
 	<div class="col-md-1">
-		<form method="POST" role="form">
-	    <button type="submit" name="alphabetic" class="btn btn-light">A-Z</button>
-		</form>
+	    <a href="/alphabetic" type="submit" name="alphabetic" class="btn btn-light">A-Z</a>
 	</div>
 	<div class="col-md-1">
-		<form method="POST" role="form">
-		    <button type="submit" name="recent" class="btn btn-light">Recent</button>
-		</form>
+		<a href="/recent" type="submit" name="recent" class="btn btn-light">Recent</a>
 	</div>
 	<div class="col-md-1">
-		<form method="POST" role="form">
-		    <button type="submit" name="oldest" class="btn btn-light">Oldest</button>
-		</form>
+		<a href="/oldest" type="submit" name="oldest" class="btn btn-light">Oldest</a>
 	</div>
 	<div class="col-md-1">
-		<form method="POST" role="form">
-		    <button type="submit" name="popular" class="btn btn-light">Popular</button>
-		</form>
+		<a href="/popular" type="submit" name="popular" class="btn btn-light">Popular</a>
 	</div>
 </div>
 <div class="row">
@@ -132,7 +124,7 @@ var marker = new mapboxgl.Marker()
 						<h3 class="card-title" style="inline-block">{{post.city}}</h3>
 					</div>
 					<div class="col-sm-6 text-right">
-						<form method="POST" role="form">
+						<form action="/" method="POST" role="form">
 						<h5 class="card-title"></h5>
 						<button style="inline-block" type="submit" name="upvote" value="{{post._id}}" class="btn btn-outline-success">⬆️ {{post.upvote}} Upvote!</button>
 						</form>

@@ -8,7 +8,7 @@ def test_home_page_status():
     assert response.status == "200 OK"
 
 def test_post_method_status():
-    post_requete = client.post("/datdsqdsqdddqda")
+    post_requete = client.post("datdsqdsqdddqda")
     assert post_requete.status == "200 OK"
 
 def test_range_by_alphabetic_post_method_status():
