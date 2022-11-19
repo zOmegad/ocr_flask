@@ -30,4 +30,4 @@ $ pytest
 Coverage :
 ```bash
 $ pytest --cov .
-``` 
+```  
