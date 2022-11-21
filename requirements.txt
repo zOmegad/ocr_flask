@@ -11,6 +11,7 @@ coverage==6.2
 distlib==0.3.0
 distro==1.4.0
 dominate==2.5.1
+exceptiongroup==1.0.4
 Faker==14.2.1
 Flask==1.1.2
 Flask-Bootstrap4==4.0.2
@@ -39,7 +40,7 @@ py==1.10.0
 pycodestyle==2.6.0
 pymongo==3.11.4
 pyparsing==2.4.7
-pytest==6.0.1
+pytest==7.2.0
 pytest-cov==4.0.0
 python-dateutil==2.8.2
 python-dotenv==0.14.0
