@@ -46,7 +46,7 @@ def sendRequest():
             my_db = connect(db="grandpy_bot_test", host="localhost", port=27017)
         else:
             my_db = connect(db="grandpy_bot", host="localhost", port=27017)
-        username_i = request.form["inputRepost"]
+        username_i = request.form["inputUsername"]
         message_i = request.form["inputRepostText"]
         city_i = request.form["inputData"]
         if not request.form["inputAvatar"]:
