@@ -27,6 +27,7 @@ def home():
 def sendRequest():
     if "question" in request.form:
         awnser = request.form['question']
+        print(request.form)
         awnser = awnser.translate(str.maketrans(
             string.punctuation, ' '*len(string.punctuation)))
         my_finder = Finder()

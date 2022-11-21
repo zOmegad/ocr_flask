@@ -2,6 +2,7 @@ from scripts.finder import Finder
 import pytest
 import json
 import requests
+from app import *
 
 
 def test_wiki_returns_good_fields(monkeypatch):
@@ -134,3 +135,10 @@ def test_cutter_returns_word():
 	finder.cutter(awnser)
 
 	assert finder.resultat == "londres "
+
+def test_finder_function():
+	client = app.test_client()
+	post_request = client.post("/", data={'question': 'Londres'})
+	print(post_request.data)
+	assert "Londres" in str(post_request.data)
+	assert "Newyork" not in str(post_request.data)
