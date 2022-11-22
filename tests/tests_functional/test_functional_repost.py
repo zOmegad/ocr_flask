@@ -9,7 +9,7 @@ def test_home_page_status():
     assert response.status == "200 OK"
 
 def test_post_method_status():
-    post_request = client.post("/", data={'db_test': '', 'inputUsername': 'testing tests prout','inputAvatar': '', 'inputRepostText':'Testing repost text', 'inputData': 'City', 'inputCoordinates': '[120.930229378541, 23.7779779950014]'})
+    post_request = client.post("/", data={'inputRepost':'', 'db_test': '', 'inputUsername': 'testing tests prout','inputAvatar': '', 'inputRepostText':'Testing repost text', 'inputData': 'City', 'inputCoordinates': '[120.930229378541, 23.7779779950014]'})
     assert post_request.status == "302 FOUND"
 
 def test_repost_recorded():

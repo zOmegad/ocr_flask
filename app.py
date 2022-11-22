@@ -71,7 +71,11 @@ def sendRequest():
     
     if "upvote" in request.form:
         # mongoengine
-        my_db = connect(db="grandpy_bot", host="localhost", port=27017)
+        print(request.form)
+        if 'db_test' in request.form:
+            my_db = connect(db="grandpy_bot_test", host="localhost", port=27017)
+        else:
+            my_db = connect(db="grandpy_bot", host="localhost", port=27017)
         post_id = request.form["upvote"]
         data = Repost.objects.get(id=post_id)
         current_upvote = data.upvote + 1

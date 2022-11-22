@@ -141,4 +141,4 @@ def test_finder_function():
 	post_request = client.post("/", data={'question': 'Londres'})
 	print(post_request.data)
 	assert "Londres" in str(post_request.data)
-	assert "Newyork" not in str(post_request.data)
+	assert "New-york" not in str(post_request.data)

@@ -24,10 +24,10 @@ $ FLASK_APP=app.py FLASK_ENV=development flask run
 
 ## Run tests
 ```bash
-$ pytest
+$ pytest -vv
 ```
 
 Coverage :
 ```bash
-$ pytest --cov .
+$ pytest --cov . --cov-report=html
 ```  
