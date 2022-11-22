@@ -1,31 +1,47 @@
 from mongoengine import connect
+from mongoengine.connection import disconnect
 import pymongo
 import random
+import sys
 from models.models import *
 from datetime import datetime
 from faker import Faker
 
-fake = Faker()
+class Data_generator():
+    def __init__(self):
+        self.db_name = "grandpy_bot"
+        self.result = False
 
-my_db = connect(db="grandpy_bot", host="localhost", port=27017)
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["grandpy_bot"]
-col = db["repost"]
-data = col.find({})
+    def generate_data(self):
+        fake = Faker()
 
-col.drop()
+        # Drop db
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client[self.db_name]
+        col = db["repost"]
+        col.drop()
+        client.close()
+        print(client.status)
 
-for i in range(25):
-    new_repost = Repost(
-        username = fake.name(),
-        comment = fake.text(max_nb_chars=30),
-        coordinate = [-70.322226, 43.530977],
-        city = fake.city(),
-        avatar = "https://ai-or-human.github.io/assets/emoji-ai.png",
-        posted_at = datetime.now(),
-        upvote = random.randint(0,100),
-    )
-    print(i)
-    new_repost.save()
+        my_db = connect(db=self.db_name, host="localhost", port=27017)
 
-my_db.close()
+        for i in range(25):
+            new_repost = Repost(
+                username = fake.name(),
+                comment = fake.text(max_nb_chars=30),
+                coordinate = [-70.322226, 43.530977],
+                city = fake.city(),
+                avatar = "https://ai-or-human.github.io/assets/emoji-ai.png",
+                posted_at = datetime.now(),
+                upvote = random.randint(0,100),
+            )
+            print(i)
+            new_repost.save()
+
+        my_db = disconnect()
+        self.result = True 
+        return self.result
+
+if __name__ == "__main__":
+    data_gen = Data_generator()
+    data_gen.generate_data()
