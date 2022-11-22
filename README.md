@@ -3,14 +3,16 @@
 
 Python3 flask app that find places and history about it, simply with Wikimedia and Mapbox API.
 
-## Changelog
-+mongodb database connection
-+comment section with username, avatar
-+sort system for reposted comments
+## Improvements
+ 🌱 mongodb database connection
+ 💬 comment section with username, avatar
+ 🗃 sort system for reposted comments
+ ⬆️ upvote
 
 ## Requirement
 
-python3 & pip
+- python3 & pip
+- [Mongodb](https://www.mongodb.com/docs/manual/installation/)
 
 ## Installation
 
@@ -22,6 +24,10 @@ To run server with debug mode :
 $ FLASK_APP=app.py FLASK_ENV=development flask run
 ```
 
+##Generate data
+```bash
+$ python3 data_generator.py
+```
 ## Run tests
 ```bash
 $ pytest -vv
@@ -29,5 +35,5 @@ $ pytest -vv
 
 Coverage :
 ```bash
-$ pytest --cov . --cov-report=html
+$ pytest --cov .
 ```  
