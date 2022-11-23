@@ -16,8 +16,8 @@ class DataGenerator():
 
         # Drop db
         client = pymongo.MongoClient("mongodb://localhost:27017/")
-        db = client[self.db_name]
-        col = db["repost"]
+        db_name = client[self.db_name]
+        col = db_name["repost"]
         col.drop()
         client.close()
         print(client.status)
