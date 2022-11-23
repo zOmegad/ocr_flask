@@ -1,8 +1,6 @@
-import pytest
 from mongoengine import connect
 from app import *
-import pymongo
-from models.models import *
+from models.models import Repost
 
 client = app.test_client()
 
@@ -14,7 +12,7 @@ def test_new_repost_is_recorded():
                 coordinate = [4, 4],
                 city = "City",
                 avatar = "https://ai-or-human.github.io/assets/emoji-ai.png",
-                posted_at = datetime.now(),  
+                posted_at = datetime.now(),
             )
     new_repost.save()
     new_post_id = new_repost.id
@@ -27,4 +25,3 @@ def test_new_upvote_is_added():
     upvoted_repost = Repost.objects.order_by('-id').first()
     my_db.close()
     assert upvoted_repost.upvote == 1
-

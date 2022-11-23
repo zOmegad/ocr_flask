@@ -1,7 +1,5 @@
 from scripts.finder import Finder
-import pytest
 import json
-import requests
 from app import *
 
 

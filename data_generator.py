@@ -1,13 +1,12 @@
+import random
+from datetime import datetime
+import pymongo
 from mongoengine import connect
 from mongoengine.connection import disconnect
-import pymongo
-import random
-import sys
-from models.models import *
-from datetime import datetime
 from faker import Faker
+from models.models import Repost
 
-class Data_generator():
+class DataGenerator():
     def __init__(self):
         self.db_name = "grandpy_bot"
         self.result = False
@@ -39,9 +38,9 @@ class Data_generator():
             new_repost.save()
 
         my_db = disconnect()
-        self.result = True 
+        self.result = True
         return self.result
 
 if __name__ == "__main__":
-    data_gen = Data_generator()
+    data_gen = DataGenerator()
     data_gen.generate_data()

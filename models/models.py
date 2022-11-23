@@ -1,4 +1,4 @@
-from mongoengine import Document, ListField, StringField, URLField, DateTimeField, ListField, IntField
+from mongoengine import Document, ListField, StringField, URLField, DateTimeField, IntField
 
 class Repost(Document):
     username = StringField(required=True, max_length=70)

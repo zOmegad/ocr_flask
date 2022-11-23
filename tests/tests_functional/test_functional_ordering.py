@@ -1,4 +1,3 @@
-import pytest
 from app import *
 
 client = app.test_client()

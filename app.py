@@ -1,14 +1,14 @@
-from flask import Flask, render_template, request, json, redirect
-from scripts.finder import *
-from models.models import *
 import os
 import ast
+import string
+from datetime import datetime
+from flask import Flask, render_template, request, redirect
 import pymongo
 from bson.json_util import ObjectId
 from mongoengine import connect
-from datetime import datetime
 from dotenv import load_dotenv
-import string
+from scripts.finder import Finder
+from models.models import Repost
 
 
 app = Flask(__name__)
@@ -24,10 +24,9 @@ def home():
     return render_template('index.html', repost = data, map_key = map_api )
 
 @app.route('/', methods=['POST'])
-def sendRequest():
+def send_request():
     if "question" in request.form:
         awnser = request.form['question']
-        print(request.form)
         awnser = awnser.translate(str.maketrans(
             string.punctuation, ' '*len(string.punctuation)))
         my_finder = Finder()
@@ -39,10 +38,13 @@ def sendRequest():
         map_api = os.getenv("MAP_API")
         resultat = my_finder.resultat
         wiki_search = my_finder.wiki_search
-        return render_template('index.html', response=resultat, coordinate=coordonnes, wiki=my_finder.wiki_result[0:2000], map_key=map_api, data_wiki = wiki_search)
+        return render_template('index.html', response=resultat,
+            coordinate=coordonnes,
+            wiki=my_finder.wiki_result[0:2000],
+            map_key=map_api,
+            data_wiki = wiki_search)
 
-    if "inputRepost" in request.form:
-        print(type(request.form))
+    if "inputRepostText" in request.form:
         if 'db_test' in request.form:
             my_db = connect(db="grandpy_bot_test", host="localhost", port=27017)
         else:
@@ -62,16 +64,15 @@ def sendRequest():
                 coordinate = coordinates_i,
                 city = city_i,
                 avatar = avatar_i,
-                posted_at = datetime.now(),  
+                posted_at = datetime.now(),
             )
             new_repost.save()
-        except Exception as e:
-            print(e)
+        except Exception as error:
+            print(error)
         my_db.close()
-    
+
     if "upvote" in request.form:
         # mongoengine
-        print(request.form)
         if 'db_test' in request.form:
             my_db = connect(db="grandpy_bot_test", host="localhost", port=27017)
         else:
