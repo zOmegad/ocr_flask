@@ -4,10 +4,10 @@
 Python3 flask app that find places and history about it, simply with Wikimedia and Mapbox API.
 
 ## Improvements
- 🌱 mongodb database connection
- 💬 comment section with username, avatar
- 🗃 sort system for reposted comments
- ⬆️ upvote
+#### 🌱 mongodb database connection
+#### 💬 comment section with username, avatar
+#### 🗃 sort system for reposted comments
+ ⬆️ repost upvote system
 
 ## Requirement
 
