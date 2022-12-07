@@ -20,7 +20,6 @@ class DataGenerator():
         col = db_name["repost"]
         col.drop()
         client.close()
-        print(client.status)
 
         my_db = connect(db=self.db_name, host="localhost", port=27017)
 
