@@ -24,7 +24,7 @@ To run server with debug mode :
 $ FLASK_APP=app.py FLASK_ENV=development flask run
 ```
 
-##Generate data
+## Generate data
 ```bash
 $ python3 data_generator.py
 ```
